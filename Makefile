@@ -25,6 +25,3 @@ clean:
 # Run emulation with QEMU
 run:
 	qemu-system-aarch64 -M raspi3 -kernel kernel8.img -serial null -serial stdio
-	
-# music:
-# 	cmd /C start music.mp3	
