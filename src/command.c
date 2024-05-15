@@ -12,7 +12,7 @@
 #define OS_NAME "Group2-OS"
 #define SCR_HEIGH 500
 #define SCR_WIDTH 700
-
+//768
 #define CHAR_SIZE 224
 #define CHAR_WIDTH 14
 #define CHAR_HEIGTH 16
@@ -397,13 +397,35 @@ void draw_image()
 {
 
 	fb_init(SCR_WIDTH, SCR_HEIGH);
-	int offset_w = (SCR_WIDTH - IMG0_WIDTH) / 2;
-	int offset_h = (SCR_HEIGH - IMG0_HEIGH) / 2;
-	for (int y = offset_h; y < IMG0_HEIGH + offset_h; y++)
+	int offset_w = (SCR_WIDTH - IMG1_WIDTH) / 2;
+	int offset_h = (SCR_HEIGH - IMG1_HEIGH) / 2;
+	for (int y = offset_h; y < IMG1_HEIGH + offset_h; y++)
 	{
-		for (int x = offset_w; x < IMG0_WIDTH + offset_w; x++)
+		for (int x = offset_w; x < IMG1_WIDTH + offset_w; x++)
 		{
-			drawPixelARGB32(x, y, image0[(y - offset_h) * IMG0_WIDTH + (x - offset_w)]);
+			drawPixelARGB32(x, y, image0[(y - offset_h) * IMG1_WIDTH + (x - offset_w)]);
 		}
 	}
 }
+
+
+// void draw_image(int x, int y, const unsigned long *image0, int width, int height) {
+//     for (int j = 0; j < height; j++) {
+//         for (int i = 0; i < width; i++) {
+//             // Calculate the index for the pixel data
+//             int index = j * width + i;
+//             // Draw the pixel at the corresponding (x, y) position
+//             drawPixelARGB32(x + i, y + j, image0[index]);
+//         }
+//     }
+// }
+
+// void deleteImage(int x, int y, int width, int height) { // to move the image: simply delete and replace a new image with new postion
+//     unsigned int backgroundColor = 0x00000000; // ARGB value for black
+//     for (int j = 0; j < height; j++) {
+//         for (int i = 0; i < width; i++) {
+//             // Overwrite the pixel at the corresponding (x, y) position with the background color
+//             drawPixelARGB32(x + i, y + j, backgroundColor);
+//         }
+//     }
+// }

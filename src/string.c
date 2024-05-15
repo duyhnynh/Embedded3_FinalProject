@@ -65,7 +65,7 @@ int is_digit(char* str)
 }
 
 // Clear string/buffer
-void clr_buffer(char* str){
+void cls_buffer(char* str){
     while(*str != '\0'){
             *str = '\0';
             str++;

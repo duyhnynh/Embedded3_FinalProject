@@ -9,10 +9,11 @@ void printC_16x14(int x, int y, char color[], char input_char);
 void printS_16x14(int x, int y, char color[], char *input_string);
 // void font();
 
-// cls
+// clear
 void clear_screen();
 
 // image
+// void draw_image(int x, int y, const unsigned long *image0, int width, int height);
 void draw_image();
 void draw_image_large ();
 
