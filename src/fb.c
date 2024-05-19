@@ -1,7 +1,8 @@
 // ----------------------------------- fb.c -------------------------------------
 #include "mbox.h"
 #include "uart1.h"
-// #include "font1.h"
+#include "font.h"
+#include "image.h"
 
 // Use RGBA32 (32 bits for each pixel)
 #define COLOR_DEPTH 32
@@ -19,7 +20,7 @@ unsigned char *fb;
 /**
  * Set screen resolution to 1024x768
  */
-void fb_init(int width, int height)
+void fb_init()
 {
   mBuf[0] = 35 * 4; // Length of message in bytes
   mBuf[1] = MBOX_REQUEST;
@@ -27,14 +28,14 @@ void fb_init(int width, int height)
   mBuf[2] = MBOX_TAG_SETPHYWH; // Set physical width-height
   mBuf[3] = 8;                 // Value size in bytes
   mBuf[4] = 0;                 // REQUEST CODE = 0
-  mBuf[5] = width;             // Value(width)
-  mBuf[6] = height;            // Value(height)
+  mBuf[5] = 1024;              // Value(width)
+  mBuf[6] = 768;               // Value(height)
 
   mBuf[7] = MBOX_TAG_SETVIRTWH; // Set virtual width-height
   mBuf[8] = 8;
   mBuf[9] = 0;
-  mBuf[10] = width;
-  mBuf[11] = height;
+  mBuf[10] = 1024;
+  mBuf[11] = 768;
 
   mBuf[12] = MBOX_TAG_SETVIRTOFF; // Set virtual offset
   mBuf[13] = 8;
@@ -128,39 +129,75 @@ void drawRectARGB32(int x1, int y1, int x2, int y2, unsigned int attr, int fill)
     }
 }
 
-// void drawChar(unsigned char ch, int x, int y, unsigned int attr, int zoom){
-//     unsigned char *glyph = (unsigned char *)&font + (ch < FONT_NUMGLYPHS ? ch : 0) * FONT_BPG;
+void drawChar(unsigned char ch, int x, int y, unsigned int attr, int zoom)
+{
+  unsigned char *glyph = (unsigned char *)&font + (ch < FONT_NUMGLYPHS ? ch : 0) * FONT_BPG;
 
-//     for (int i = 1; i <= (FONT_HEIGHT * zoom); i++) {
-//         for (int j = 0; j < (FONT_WIDTH * zoom); j++) {
-//             unsigned char mask = 1 << (j / zoom);
-//             if (*glyph & mask) { // Only draw pixels belong to the character glyph
-//                 drawPixelARGB32(x + j, y + i, attr);
-//             }
-//         }
-//         glyph += (i % zoom) ? 0 : FONT_BPL;
-//     }
-// }
+  for (int i = 1; i <= (FONT_HEIGHT * zoom); i++)
+  {
+    for (int j = 0; j < (FONT_WIDTH * zoom); j++)
+    {
+      unsigned char mask = 1 << (j / zoom);
+      if (*glyph & mask)
+      { // Only draw pixels belong to the character glyph
+        drawPixelARGB32(x + j, y + i, attr);
+      }
+    }
+    glyph += (i % zoom) ? 0 : FONT_BPL;
+  }
+}
 
-// void drawString(int x, int y, char *str, unsigned int attr, int zoom)
-// {
-//     while (*str) {
-//         if (*str == '\r') {
-//             x = 0;
-//         } else if (*str == '\n') {
-//             x = 0; 
-//             y += (FONT_HEIGHT * zoom);
-//         } else {
-//             drawChar(*str, x, y, attr, zoom);
-//             x += (FONT_WIDTH * zoom);
-//         }
-//         str++;
-//     }
-// }
-
+void drawString(int x, int y, char *str, unsigned int attr, int zoom)
+{
+  while (*str)
+  {
+    if (*str == '\r')
+    {
+      x = 0;
+    }
+    else if (*str == '\n')
+    {
+      x = 0;
+      y += (FONT_HEIGHT * zoom);
+    }
+    else
+    {
+      drawChar(*str, x, y, attr, zoom);
+      x += (FONT_WIDTH * zoom);
+    }
+    str++;
+  }
+}
 
 void drawPixel(int x, int y, unsigned int color)
 {
-    int offs = (y * pitch) + (x * 4);
-    *((unsigned int*)(fb + offs)) = color;
+  int offs = (y * pitch) + (x * 4);
+  *((unsigned int *)(fb + offs)) = color;
+}
+
+//-------------------image--------------//
+
+void displayImage(int x, int y, const unsigned long *image0, int width, int height)
+{
+  for (int j = 0; j < height; j++) // Loop over each row of the image
+  {
+    for (int i = 0; i < width; i++) // Loop over each column in the current row
+    {
+      int index = j * width + i; // Calculate the linear array index from 2D coordinates
+      drawPixelARGB32(x + i, y + j, image0[index]); // Draw the pixel at (x+i, y+j) with color from image data
+    }
+  }
+}
+
+void deleteImage(int x, int y, int width, int height)
+{                                            // to move the image: simply delete and replace a new image with new postion
+  unsigned int backgroundColor = 0x00000000; // ARGB value for black
+  for (int j = 0; j < height; j++)
+  {
+    for (int i = 0; i < width; i++)
+    {
+      // Overwrite the pixel at the corresponding (x, y) position with the background color
+      drawPixelARGB32(x + i, y + j, backgroundColor);
+    }
+  }
 }
