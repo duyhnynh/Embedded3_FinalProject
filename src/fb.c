@@ -190,14 +190,13 @@ void displayImage(int x, int y, const unsigned long *image0, int width, int heig
 }
 
 void deleteImage(int x, int y, int width, int height)
-{                                            // to move the image: simply delete and replace a new image with new postion
-  unsigned int backgroundColor = 0x00000000; // ARGB value for black
-  for (int j = 0; j < height; j++)
+{
+  unsigned int backgroundColor = 0x00000000; // Define the background color as black (transparent if alpha is used)
+  for (int j = 0; j < height; j++) // Loop over each row in the specified height
   {
-    for (int i = 0; i < width; i++)
+    for (int i = 0; i < width; i++) // Loop over each column in the specified width
     {
-      // Overwrite the pixel at the corresponding (x, y) position with the background color
-      drawPixelARGB32(x + i, y + j, backgroundColor);
+      drawPixelARGB32(x + i, y + j, backgroundColor); // Overwrite the pixel at (x+i, y+j) with the background color
     }
   }
 }
