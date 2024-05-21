@@ -33,13 +33,13 @@ void uart_init()
     while (r--)
     {
         asm volatile("nop");
-    }                                  // waiting 150 cycles
+    } // waiting 150 cycles
     GPPUDCLK0 = (1 << 14) | (1 << 15); // enable clock for GPIO 14, 15
     r = 150;
     while (r--)
     {
         asm volatile("nop");
-    }              // waiting 150 cycles
+    } // waiting 150 cycles
     GPPUDCLK0 = 0; // flush GPIO setup
 
 #else // RPI4
@@ -105,18 +105,18 @@ void uart_puts(char *s)
  */
 void uart_hex(unsigned int num)
 {
-	uart_puts("0x");
-	for (int pos = 28; pos >= 0; pos = pos - 4)
-	{
+    uart_puts("0x");
+    for (int pos = 28; pos >= 0; pos = pos - 4)
+    {
 
-		// Get highest 4-bit nibble
-		char digit = (num >> pos) & 0xF;
+        // Get highest 4-bit nibble
+        char digit = (num >> pos) & 0xF;
 
-		/* Convert to ASCII code */
-		// 0-9 => '0'-'9', 10-15 => 'A'-'F'
-		digit += (digit > 9) ? (-10 + 'A') : '0';
-		uart_sendc(digit);
-	}
+        /* Convert to ASCII code */
+        // 0-9 => '0'-'9', 10-15 => 'A'-'F'
+        digit += (digit > 9) ? (-10 + 'A') : '0';
+        uart_sendc(digit);
+    }
 }
 
 /*
@@ -125,37 +125,39 @@ void uart_hex(unsigned int num)
 */
 void uart_dec(int num)
 {
-	// A string to store the digit characters
-	char str[33] = "";
+    // A string to store the digit characters
+    char str[33] = "";
 
-	// Calculate the number of digits
-	int len = 1;
-	int temp = num;
-	while (temp >= 10)
-	{
-		len++;
-		temp = temp / 10;
-	}
+    // Calculate the number of digits
+    int len = 1;
+    int temp = num;
+    while (temp >= 10)
+    {
+        len++;
+        temp = temp / 10;
+    }
 
-	// Store into the string and print out
-	for (int i = 0; i < len; i++)
-	{
-		int digit = num % 10; // get last digit
-		num = num / 10;		  // remove last digit from the number
-		str[len - (i + 1)] = digit + '0';
-	}
-	str[len] = '\0';
+    // Store into the string and print out
+    for (int i = 0; i < len; i++)
+    {
+        int digit = num % 10; // get last digit
+        num = num / 10;       // remove last digit from the number
+        str[len - (i + 1)] = digit + '0';
+    }
+    str[len] = '\0';
 
-	uart_puts(str);
+    uart_puts(str);
 }
 
-unsigned int uart_isReadByteReady(){
-	return (*AUX_MU_LSR & 0x01);
+unsigned int uart_isReadByteReady()
+{
+    return (*AUX_MU_LSR & 0x01);
 }
 
-unsigned char getUart(){
+unsigned char getUart()
+{
     unsigned char ch = 0;
     if (uart_isReadByteReady())
-    	ch = uart_getc();
+        ch = uart_getc();
     return ch;
 }
