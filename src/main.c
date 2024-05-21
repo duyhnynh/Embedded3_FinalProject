@@ -4,6 +4,7 @@
 // #include "font.h"
 #include "image.h"
 #include "string.h"
+#include "video.h"
 
 #define OS_NAME "Group2"
 #define IMAGE_WIDTH 1024
@@ -14,8 +15,8 @@
 #define DOWN 's'
 #define LEFT 'a'
 #define RIGHT 'd'
-// #define VIDEO_WIDTH 320
-// #define VIDEO_HEIGHT 240
+#define VID_WIDTH 320
+#define VID_HEIGHT 240
 int currentPosX = 0;  // Current horizontal position of the image
 int currentPosY = 0;  // Current vertical position of the image
 int previousPosX = 0; // Previous horizontal position of the image
@@ -66,12 +67,12 @@ void cli()
     else if (command == 'v')
     {
         deleteImage(previousPosX, previousPosY, SCREEN_SIZE, SCREEN_SIZE);
-        displayImage(0, 0, video1allArray[0], VIDEO_WIDTH, VIDEO_HEIGHT);
-        for (int i = 1; i < VIDEO_TOTAL_FRAME; i++)
+        displayImage(350, 250, video1allArray[0], VID_WIDTH, VID_HEIGHT);
+        for (int i = 1; i < FRAME; i++)
         {
             wait_msec(100000);
-            deleteImage(0, 0, VIDEO_WIDTH,  VIDEO_HEIGHT);
-            displayImage(0, 0, epd_bitmap_allArray[i] , VIDEO_WIDTH,  VIDEO_HEIGHT);
+            deleteImage(350, 250, VID_WIDTH, VID_HEIGHT);
+            displayImage(350, 250, video1allArray[i] , VID_WIDTH,  VID_HEIGHT);
         }
     }
 }
