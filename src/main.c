@@ -5,6 +5,7 @@
 #include "image.h"
 #include "string.h"
 #include "video.h"
+#include "fb.h"
 
 #define OS_NAME "Group2"
 #define IMAGE_WIDTH 1024
@@ -82,8 +83,8 @@ void main()
     // set up serial console
     uart_init();
 
-    // Initialize frame buffer
-    fb_init();
+    // Initialize frame buffer with specific width and height
+    fb_init(1024,768);
     // font
     TeamName();
     // Print OS line
