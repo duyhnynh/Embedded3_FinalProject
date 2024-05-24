@@ -46,3 +46,35 @@ void strcpy(char *dest, const char *src)
     }
     *dest = '\0';
 }
+
+char *strtok(char *str, const char *delim)
+{
+    static char *p = (char *)0;
+    if (*str != '\0')
+        p = str;
+
+    if (p == (char *)0 || *p == '\0')
+        return (char *)0;
+
+    char *start = p;
+
+    while (*p != '\0')
+    {
+        const char *d = delim;
+        while (*d != '\0')
+        {
+            if (*p == *d)
+            {
+                *p = '\0';
+                ++p;
+                if (*p == '\0')
+                    p = (char *)0;
+                return start;
+            }
+            ++d;
+        }
+        ++p;
+    }
+
+    return start;
+}

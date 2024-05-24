@@ -49,46 +49,6 @@ void commandList()
     uart_puts("   Please enter 'cls'\n");
 }
 //--------------New Receive Method-----------------//
-int cus_strcmp(const char *s1, const char *s2)
-{
-    while (*s1 && *s2 && *s1 == *s2)
-    {
-        ++s1;
-        ++s2;
-    }
-    return *s1 - *s2;
-}
-char *cus_strtok(char *str, const char *delim)
-{
-    static char *p = (char *)0;
-    if (*str != '\0')
-        p = str;
-
-    if (p == (char *)0 || *p == '\0')
-        return (char *)0;
-
-    char *start = p;
-
-    while (*p != '\0')
-    {
-        const char *d = delim;
-        while (*d != '\0')
-        {
-            if (*p == *d)
-            {
-                *p = '\0';
-                ++p;
-                if (*p == '\0')
-                    p = (char *)0;
-                return start;
-            }
-            ++d;
-        }
-        ++p;
-    }
-
-    return start;
-}
 
 void cli()
 {
@@ -123,16 +83,16 @@ void cli()
     {
 
         cli_buffer[index] = '\0';
-        command = cus_strtok(cli_buffer, " ");
+        command = strtok(cli_buffer, " ");
 
         /* Compare with supported commands and execute
          * ........................................... */
         // HELP FUNCTION
-        if (cus_strcmp(command, "font") == 0)
+        if (strcmp(command, "font") == 0)
         {
             TeamName();
         }
-        else if (cus_strcmp(command, "video") == 0)
+        else if (strcmp(command, "video") == 0)
         {
             deleteImage(previousPosX, previousPosY, SCREEN_SIZE, SCREEN_SIZE);
             displayImage(350, 250, video1allArray[0], VID_WIDTH, VID_HEIGHT);
@@ -143,7 +103,7 @@ void cli()
                 displayImage(350, 250, video1allArray[i], VID_WIDTH, VID_HEIGHT);
             }
         }
-        else if (cus_strcmp(command, "clear") == 0)
+        else if (strcmp(command, "clear") == 0)
         {
             fb_init(1920, 1080);
             for (int i = 0; i < 1920; i++)
@@ -197,8 +157,6 @@ void main()
     // Initialize frame buffer with specific width and height
     fb_init(1024, 768);
     // Initialize frame buffer
-    // font
-    TeamName();
     // Print OS line
     uart_puts("\n");
     uart_puts(OS_NAME);
