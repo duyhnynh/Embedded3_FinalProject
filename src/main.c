@@ -84,7 +84,7 @@ void main()
     uart_init();
 
     // Initialize frame buffer with specific width and height
-    fb_init(1024,768);
+    fb_init(1024, 768);
     // font
     TeamName();
     // Print OS line

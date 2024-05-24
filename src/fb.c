@@ -20,7 +20,7 @@ unsigned char *fb;
 /**
  * Set screen resolution to 1024x768
  */
-void fb_init()
+void fb_init(int weigth, int height)
 {
   mBuf[0] = 35 * 4; // Length of message in bytes
   mBuf[1] = MBOX_REQUEST;
