@@ -5,3 +5,6 @@
 
 #vscode folder
 **/.vscode
+
+#ignore Makefile, multiple devices
+**/Makefile
