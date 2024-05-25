@@ -200,3 +200,16 @@ void deleteImage(int x, int y, int width, int height)
     }
   }
 }
+
+//-----Clear screen-----//
+void clear_screen()
+{
+    fb_init(1024, 768);
+    for (int i = 0; i < 1024; i++)
+    {
+        for (int j = 0; j < 768; j++)
+        {
+            drawPixelARGB32(i, j, 0x00000000);
+        }
+    }
+}

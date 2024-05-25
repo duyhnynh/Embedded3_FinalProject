@@ -5,3 +5,4 @@ void drawChar(unsigned char ch, int x, int y, unsigned int attr, int zoom);
 void drawString(int x, int y, char *str, unsigned int attr, int zoom);
 void displayImage(int x, int y, const unsigned long *image, int width, int height);
 void deleteImage(int x, int y, int width, int height);
+void clear_screen();
