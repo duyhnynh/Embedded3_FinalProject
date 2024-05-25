@@ -37,16 +37,14 @@ void commandList()
 {
     uart_puts("\n1. Show font size\n");
     uart_puts("   Please enter 'font'\n");
-    uart_puts("2. Show a small image\n");
+    uart_puts("2. Show a image\n");
     uart_puts("   Please enter 'image'\n");
-    uart_puts("3. Show a larger image\n");
-    uart_puts("   Please enter 'image large'\n");
-    uart_puts("4. Show a video\n");
+    uart_puts("3. Show a video\n");
     uart_puts("   Please enter 'video'\n");
-    uart_puts("5. Play a game\n");
+    uart_puts("4. Play a game\n");
     uart_puts("   Please enter 'game'\n");
-    uart_puts("6. Clear screen\n");
-    uart_puts("   Please enter 'cls'\n");
+    uart_puts("5. Clear screen\n");
+    uart_puts("   Please enter 'clear'\n");
 }
 //--------------New Receive Method-----------------//
 
@@ -105,6 +103,7 @@ void cli()
         }
         else if (strcmp(command, "clear") == 0)
         {
+            //-----Clear screen-----//
             fb_init(1920, 1080);
             for (int i = 0; i < 1920; i++)
             {
@@ -156,7 +155,7 @@ void main()
     uart_init();
     // Initialize frame buffer with specific width and height
     fb_init(1024, 768);
-    // Initialize frame buffer
+    commandList();
     // Print OS line
     uart_puts("\n");
     uart_puts(OS_NAME);
