@@ -12,6 +12,8 @@
 
 #define MAX_CMD_SIZE 100
 #define OS_NAME "Group2"
+#define BG_IMAGE_WIDTH 1024
+#define BG_IMAGE_HEIGHT 768
 #define IMAGE_WIDTH 1920
 #define IMAGE_HEIGHT 1080
 #define SCREEN_SIZE 2000 // Define the dimension to clear a larger area than the image itself
@@ -42,11 +44,38 @@ void commandList()
     uart_puts("5. Clear screen\n");
     uart_puts("   Please enter 'clear'\n");
 }
-//---------------theme---------------//
-// void Theme()
-// {
+//---------------Background Image---------------//
+void BackgroundImage()
+{
+    // Display the background image
+    for (int y = 0; y < BG_IMAGE_HEIGHT; y++)
+    {
+        for (int x = 0; x < BG_IMAGE_WIDTH; x++)
+        {
+            drawPixelARGB32(x, y, image1[(y)*BG_IMAGE_WIDTH + (x)]);
+        }
+    }
+}
+//---------------welcome screen---------------//
+void welcomeScreen()
+{
+    fb_init(1024, 768);
+    // Display the background image
+    BackgroundImage();
+    // Display the course name and the OS NAME
+    Introduction();
 
-// }
+    // Wait for user to press a key to continue
+    uart_puts("\nPress any key to continue...");
+    uart_getc();
+}
+//---------------Introduction---------------//
+void Introduction()
+{
+    drawString(200, 100, "Welcome to Group 2 OS", 0xFF00FF, 4);             // Magenta
+    drawString(200, 500, "EEET2490 - Embedded Systems:", 0xFFFF99FF, 3);     // Pink
+    drawString(150, 600, "Operating Systems and Interfacing", 0xFFFF99FF, 3);
+}
 //---------------font---------------//
 void TeamName()
 {
@@ -176,6 +205,7 @@ void cli()
          * ........................................... */
         if (strcmp(command, "font") == 0)
         {
+            clear_screen();
             TeamName();
         }
         else if (strcmp(command, "image") == 0)
@@ -193,6 +223,8 @@ void cli()
         else if (strcmp(command, "clear") == 0)
         {
             clear_screen();
+            BackgroundImage();
+            Introduction();
         }
         else
         {
@@ -209,6 +241,8 @@ void main()
     uart_init();
     // Initialize frame buffer with specific width and height
     fb_init(1024, 768);
+    //Display welcome screen
+    welcomeScreen();
     // Print available command list
     commandList();
     // Print OS line
