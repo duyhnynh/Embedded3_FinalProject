@@ -1,8 +1,9 @@
 // ----------------------------------- fb.c -------------------------------------
-#include "mbox.h"
-#include "uart1.h"
-#include "font.h"
-#include "image.h"
+#include "../include/mbox.h"
+#include "../include/uart1.h"
+#include "../include/font.h"
+#include "../include/image.h"
+#include "../include/fb.h"
 
 // Use RGBA32 (32 bits for each pixel)
 #define COLOR_DEPTH 32
@@ -89,7 +90,7 @@ void fb_init(int weigth, int height)
     uart_puts("\n");
 
     uart_puts("Frame Buffer Size (bytes): ");
-    uart_dec(mBuf[29]);
+    uart_hex(mBuf[29]);
     uart_puts("\n");
 
     width = mBuf[5];  // Actual physical width

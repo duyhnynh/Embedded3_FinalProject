@@ -1,6 +1,7 @@
-#include "fb.h"
-#include "uart1.h"
-#include "mbox.h"
+#include "../include/fb.h"
+#include "../include/uart1.h"
+#include "../include/mbox.h"
+#include "../include/delay.h"
 
 /* Functions to delay, set/wait timer */
 
@@ -39,5 +40,8 @@ void wait_msec(unsigned int n)
     // calculate required count increase
     unsigned long i=((f/1000)*n)/1000;
     // loop while counter increase is less than i
-    do{asm volatile ("mrs %0, cntpct_el0" : "=r"(r));}while(r-t<i);
+    do
+    {
+        asm volatile ("mrs %0, cntpct_el0" : "=r"(r));
+    }while(r-t<i);
 }

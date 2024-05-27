@@ -1,4 +1,4 @@
-#include "string.h"
+#include "../include/string.h"
 
 // Custom strcmp function
 int strcmp(const char *s1, const char *s2)
