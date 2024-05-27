@@ -12,7 +12,7 @@
 
 #define MAX_CMD_SIZE 100
 #define OS_NAME "Group2"
-#define IMAGE_WIDTH 1920    
+#define IMAGE_WIDTH 1920
 #define IMAGE_HEIGHT 1080
 #define SCREEN_SIZE 2000 // Define the dimension to clear a larger area than the image itself
 #define STEP 10          // Define the number of pixels to move the image with each key press
@@ -50,7 +50,7 @@ void commandList()
 //---------------font---------------//
 void TeamName()
 {
-    drawString(200, 100, "Group 2", 0xFFFFA500, 5);           // Orange
+    drawString(200, 100, "Group 2", 0xFFFFA500, 5);                      // Orange
     drawString(200, 200, "Phan Trong Nguyen - s3927189", 0xFFFF99FF, 3); // Pink
     drawString(200, 300, "Hur Hyeonbin - s3740878", 0x0000FFFF, 3);      // Cyan
     drawString(200, 400, "Huynh Ngoc Duy - s3924704", 0x0000FF00, 3);    // Green
@@ -64,13 +64,14 @@ void video()
     for (int i = 1; i < FRAME; i++)
     {
         wait_msec(100000);
-        deleteImage(350, 250, VID_WIDTH, VID_HEIGHT);
+
         displayImage(350, 250, video1allArray[i], VID_WIDTH, VID_HEIGHT);
     }
 }
 //---------------image---------------//
 void image()
 {
+    int currentInputPosY = 0;
     fb_init(1024, 768);
     uart_puts("\nPress 's' to scroll down \n");
     uart_puts("Press 'w' to scroll up \n");
@@ -95,30 +96,37 @@ void image()
         command = uart_getc();
         if (command == UP)
         {
-            previousPosY = currentPosY;
-            currentPosY -= STEP; // scroll up by 10 pixels
-            deleteImage(currentPosX, previousPosY, SCREEN_SIZE, SCREEN_SIZE);
-            displayImage(currentPosX, currentPosY, image0, IMAGE_WIDTH, IMAGE_HEIGHT);
+            /* 31 times as i counted is the maximum number user can scroll down the image otherwise, it will started to overlap at the border top and bottom (left and right doesn't need as the image connected to itselft somehow? : D )*/
+            if (currentInputPosY < 31 && currentInputPosY >= 0)
+            {
+                currentInputPosY += 1;
+                previousPosY = currentPosY;
+                currentPosY -= STEP; // scroll up by 10 pixels
+                displayImage(currentPosX, currentPosY, image0, IMAGE_WIDTH, IMAGE_HEIGHT);
+            }
         }
         else if (command == DOWN)
         {
-            previousPosY = currentPosY;
-            currentPosY += STEP; // scroll down by 10 pixels
-            deleteImage(previousPosX, previousPosY, SCREEN_SIZE, SCREEN_SIZE);
-            displayImage(currentPosX, currentPosY, image0, IMAGE_WIDTH, IMAGE_HEIGHT);
+
+            if (currentInputPosY <= 31 && currentInputPosY > 0)
+            {
+                currentInputPosY -= 1;
+                previousPosY = currentPosY;
+                currentPosY += STEP; // scroll down by 10 pixels
+                displayImage(currentPosX, currentPosY, image0, IMAGE_WIDTH, IMAGE_HEIGHT);
+            }
         }
         else if (command == LEFT)
         {
             previousPosX = currentPosX;
-            currentPosX -= STEP; // scroll down by 10 pixels
-            deleteImage(previousPosX, previousPosY, SCREEN_SIZE, SCREEN_SIZE);
+            currentPosX -= STEP; // scroll left by 10 pixels
+
             displayImage(currentPosX, currentPosY, image0, IMAGE_WIDTH, IMAGE_HEIGHT);
         }
         else if (command == RIGHT)
         {
             previousPosX = currentPosX;
-            currentPosX += STEP; // scroll down by 10 pixels
-            deleteImage(previousPosX, previousPosY, SCREEN_SIZE, SCREEN_SIZE);
+            currentPosX += STEP; // scroll right by 10 pixels
             displayImage(currentPosX, currentPosY, image0, IMAGE_WIDTH, IMAGE_HEIGHT);
         }
         // Exit the image when user press ENTER
