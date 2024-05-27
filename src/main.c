@@ -12,8 +12,8 @@
 
 #define MAX_CMD_SIZE 100
 #define OS_NAME "Group2"
-#define IMAGE_WIDTH 1024
-#define IMAGE_HEIGHT 768
+#define IMAGE_WIDTH 1920    
+#define IMAGE_HEIGHT 1080
 #define SCREEN_SIZE 2000 // Define the dimension to clear a larger area than the image itself
 #define STEP 10          // Define the number of pixels to move the image with each key press
 #define UP 'w'
@@ -42,14 +42,19 @@ void commandList()
     uart_puts("5. Clear screen\n");
     uart_puts("   Please enter 'clear'\n");
 }
+//---------------theme---------------//
+// void Theme()
+// {
+
+// }
 //---------------font---------------//
 void TeamName()
 {
     drawString(200, 100, "Group 2", 0xFFFFA500, 5);           // Orange
-    drawString(200, 200, "Phan Trong Nguyen", 0xFFFF99FF, 3); // Pink
-    drawString(200, 300, "Hur Hyeonbin", 0x0000FFFF, 3);      // Cyan
-    drawString(200, 400, "Huynh Ngoc Duy", 0x0000FF00, 3);    // Green
-    drawString(200, 500, "Tran Thanh Tu", 0xFFFF0000, 3);     // Red
+    drawString(200, 200, "Phan Trong Nguyen - s3927189", 0xFFFF99FF, 3); // Pink
+    drawString(200, 300, "Hur Hyeonbin - s3740878", 0x0000FFFF, 3);      // Cyan
+    drawString(200, 400, "Huynh Ngoc Duy - s3924704", 0x0000FF00, 3);    // Green
+    drawString(200, 500, "Tran Thanh Tu - s3957386", 0xFFFF0000, 3);     // Red
 }
 //---------------video---------------//
 void video()
