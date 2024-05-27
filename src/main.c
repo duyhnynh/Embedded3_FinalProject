@@ -66,7 +66,7 @@ void welcomeScreen()
     Introduction();
 
     // Wait for user to press a key to continue
-    uart_puts("\nPress any key to continue...");
+    uart_puts("\nPress any key to continue...\n");
     uart_getc();
 }
 //---------------Introduction---------------//
