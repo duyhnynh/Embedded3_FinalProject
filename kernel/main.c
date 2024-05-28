@@ -67,7 +67,6 @@ void welcomeScreen()
     BackgroundImage();
     // Display the course name and the OS NAME
     Introduction();
-
     // Wait for user to press a key to continue
     uart_puts("\nPress any key to continue...\n");
     uart_getc();
@@ -253,16 +252,13 @@ void main()
     uart_puts(OS_NAME);
     uart_puts(":> ");
     // echo everything back
-
-    task1();
-}
-
-void task1()
-{
-    BackgroundImage();
-    Introduction();
     while (1)
     {
         cli();
     }
+}
+
+void task1()
+{
+    main();
 }

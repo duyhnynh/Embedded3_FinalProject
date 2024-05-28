@@ -46,6 +46,7 @@ int is_die_check(int current_character, int current_block);
 void start_new_stage(int stage);
 
 void pause_mode();
+void welcome_screen();
 
 void game_play()
 {
@@ -56,6 +57,7 @@ void game_play()
     fb_init(1024, 768);
     // all_clear_fn();
     unsigned char c;
+    escape_game = 0;
 
     while (1)
     {
@@ -200,6 +202,11 @@ void game_play()
                         game_over_flag = is_die_check(current_w_index, block_array[step]);
                     }
                 }
+
+                if (game_over_flag == 1)
+                {
+                    uart_puts("\nfalling off from the block..\n");
+                }
             }
             die_by_bullet = is_shot_fatal_check();
             if (die_by_bullet == 1)
@@ -250,6 +257,8 @@ void game_play()
                     ms_counter = 0;
                     if (timer == 1)
                     {
+                        uart_puts("\nTime out!!\n");
+
                         game_over_flag = 1;
                     }
                     timer -= 1;
@@ -261,6 +270,18 @@ void game_play()
                     shiftY = -700;
                     stage++;
                     stage_start_flag = 0;
+                    if (stage == 1)
+                    {
+                        uart_puts("\nStage 1 : Jungle start!\n");
+                    }
+                    else if (stage == 2)
+                    {
+                        uart_puts("\nStage 2 : Antarctica start!\n");
+                    }
+                    else if (stage == 3)
+                    {
+                        uart_puts("\nStage 3 : Volcano start!\n");
+                    }
                     if (stage == 4)
                     {
                         all_clear_fn();
@@ -302,6 +323,7 @@ void game_play()
             break;
         }
     }
+    task1();
 }
 
 int is_die_check(int current_character, int current_block)
@@ -320,6 +342,13 @@ int is_die_check(int current_character, int current_block)
 void game_start_fn()
 {
     startGame();
+    welcome_screen();
+
+    uart_puts("\nPress \"Enter\" to start the game !");
+    uart_puts("\nPress \"a\" to move left top block");
+    uart_puts("\nPress \"d\" to move right top block");
+
+    uart_puts("\nLet's move to top\n");
 
     while (1)
     {
@@ -391,6 +420,7 @@ void start_new_stage(int stage)
 void all_clear_fn()
 {
     all_clear();
+    uart_puts("\nYOU CLEAR THE GAME!\n");
     int start_w = 100;
     int start_h = 600;
     int bullet_w = 100;
@@ -458,6 +488,8 @@ void all_clear_fn()
 
 void pause_mode()
 {
+    uart_puts("\nEntered to Pause mode\n");
+
     drawString(450, 300, "PAUSE", 0x00AA0000, 4);
     static char currentCommand[100];
     int charIndex = 0;
@@ -466,7 +498,7 @@ void pause_mode()
         char c = uart_getc();
         if (c == ' ')
         {
-            uart_sendc('\n');
+            uart_puts("\nEscape Pause mode\n");
             break;
         }
 
@@ -532,6 +564,7 @@ void pause_mode()
                     current_h_index = 708 - 120;
                     game_over_flag = 0;
                     current_w_index = block_array[0];
+                    uart_puts("\n Successfully jumped to stage 1 \n");
                 }
                 else if (my_strncmp(destination_stage, "2", 1) == 1)
                 {
@@ -543,6 +576,7 @@ void pause_mode()
                     step = 0;
                     game_over_flag = 0;
                     current_w_index = block_array[0];
+                    uart_puts("\n Successfully jumped to stage 2 \n");
                 }
                 else if (my_strncmp(destination_stage, "3", 1) == 1)
                 {
@@ -554,6 +588,8 @@ void pause_mode()
                     game_over_flag = 0;
                     step = 0;
                     current_w_index = block_array[0];
+
+                    uart_puts("\n Successfully jumped to stage 3 \n");
                 }
                 else
                 {
@@ -598,6 +634,8 @@ int is_shot_fatal_check()
             die_flag = is_character_die_by_bullet(current_bullet_w, monster_position_array[i], current_w_index, current_h_index);
             if (die_flag == 1)
             {
+                uart_puts("\nMonster kills you!\n");
+
                 return 1;
             }
         }
@@ -623,4 +661,22 @@ int is_character_die_by_bullet(int bullet_w, int bullet_h, int character_w, int 
             return 0;
         }
     }
+}
+
+void welcome_screen()
+{
+    uart_puts("\n\n\n\n\n");
+    uart_puts(
+        " _____       __ _        _           \n"
+        "|_   _|    / _(_)     (_) |          \n"
+        "  | |  __ | |_ _ _ __  _| |_ _ _   _ \n"
+        "  | | |_ \\|  _| | '_ \\| | __  | | | |  \n"
+        " _| |_| | | | | | | | | | | |_| |_| |  \n"
+        "|_____|_| |_|_| |_|_| |_|_|\\__|\\__, |  \n"
+        "    | |      (_)                __/ |  \n"
+        " ___| |_ __ _ _ _ __ ___ __ _ _|___/__ \n"
+        "/ __| __/ _` | | '__/ __/ _` / __|/ _ \\\n"
+        "\\__ \\ || (_| | | | | (_| (_| \\__ \\  __/\n"
+        "|___/\\__\\__,_|_|_|  \\___\\__,_|___/\\___|\n");
+    uart_puts("\n\n\n");
 }
