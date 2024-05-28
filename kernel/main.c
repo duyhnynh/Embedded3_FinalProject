@@ -7,6 +7,8 @@
 #include "../include/video.h"
 #include "../include/fb.h"
 #include "../include/play.h"
+#include "../include/timer.h"
+#include "../include/interrupt.h"
 
 // #define SCR_HEIGH 768
 // #define SCR_WIDTH 1024
@@ -235,6 +237,10 @@ void cli()
             BackgroundImage();
             Introduction();
         }
+        else if (strcmp(command, "timer") == 0)
+        {
+            wait_msec_irq(10000);
+        }
         else
         {
             uart_puts("Invalid command. Please enter again!\n");
@@ -248,6 +254,7 @@ void main()
 {
     // set up serial console
     uart_init();
+    init_interrupts();
     // Initialize frame buffer with specific width and height
     fb_init(1024, 768);
     // Display welcome screen

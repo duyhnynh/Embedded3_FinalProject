@@ -4,6 +4,8 @@
 #include "../include/utils.h"
 #include "../include/game.h"
 #include "../include/main.h"
+#include "../include/timer.h"
+#include "../include/interrupt.h"
 
 unsigned int first_block;  // first block in each stage
 unsigned int *block_array; // the random block array
@@ -103,10 +105,10 @@ void game_play()
             {
                 load_character(current_w_index, current_h_index, direction);
             }
-
-            set_wait_timer(1, 10);
+            init_interrupts();
+            set_wait_timer_irq(1, 10);
             c = getUart();
-            set_wait_timer(0, 0);
+            set_wait_timer_irq(0, 0);
             ms_counter++;
 
             show_timer(timer);
@@ -430,9 +432,10 @@ void all_clear_fn()
 
     while (1)
     {
-        set_wait_timer(1, 10);
+        init_interrupts();
+        set_wait_timer_irq(1, 10);
         c = getUart();
-        set_wait_timer(0, 0);
+        set_wait_timer_irq(0, 0);
         ms_counter++;
 
         if (c == 'r')
