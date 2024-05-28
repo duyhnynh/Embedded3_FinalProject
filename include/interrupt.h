@@ -1,14 +1,14 @@
 #include "../include/gpio.h"
 
 // Base MMIO address
-#define MMIO_BASE 0x3F000000
+// #define MMIO_BASE 0x3F000000
 
 // Interrupt controller base address
 #define INTERRUPT_BASE (MMIO_BASE + 0xB000)
 
 // Interrupt controller registers for RPI3
-#define IRQ_BASIC_PENDING (*(volatile unsigned int *)(INTERRUPT_BASE + 0x200))
-#define IRQ_PENDING (*(volatile unsigned int *)(INTERRUPT_BASE + 0x204))
+#define IRQ_PENDING_0 (*(volatile unsigned int *)(INTERRUPT_BASE + 0x200))
+#define IRQ_PENDING_1 (*(volatile unsigned int *)(INTERRUPT_BASE + 0x204))
 #define FIQ_CONTROL (*(volatile unsigned int *)(INTERRUPT_BASE + 0x20C))
 #define INTERRUPT_ENABLE_IRQS                                                  \
 (*(volatile unsigned int *)(INTERRUPT_BASE + 0x210))

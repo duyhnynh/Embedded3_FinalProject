@@ -4,7 +4,7 @@
 #include "../include/gpio.h"
 
 // Base MMIO address
-#define MMIO_BASE 0x3F000000
+// #define MMIO_BASE 0x3F000000
 
 // System timer base address
 #define TIMER_BASE (MMIO_BASE + 0x3000)

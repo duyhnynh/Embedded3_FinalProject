@@ -19,11 +19,11 @@ void handle_irq_elx(void) {
   unsigned int irq_pending;
 
   // Check for pending interrupts on IRQ_PENDING_1
-  irq_pending = IRQ_PENDING;
+  irq_pending = IRQ_PENDING_1;
 
   if (irq_pending & SYS_TIMER_IRQ) {
     handle_system_timer();
     // Clear the interrupt after handling
-    IRQ_PENDING |= SYS_TIMER_IRQ;
+    IRQ_PENDING_1 |= SYS_TIMER_IRQ;
   }
 }
