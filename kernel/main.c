@@ -70,6 +70,7 @@ void welcomeScreen()
     // Wait for user to press a key to continue
     uart_puts("\nPress any key to continue...\n");
     uart_getc();
+    uart_puts("\nType 'help' to see available commands");
 }
 //---------------Introduction---------------//
 void Introduction()
@@ -205,7 +206,11 @@ void cli()
 
         /* Compare with supported commands and execute
          * ........................................... */
-        if (strcmp(command, "font") == 0)
+        if (strcmp(command, "help") == 0)
+        {
+            commandList();
+        }
+        else if (strcmp(command, "font") == 0)
         {
             clear_screen();
             TeamName();
@@ -245,8 +250,6 @@ void main()
     fb_init(1024, 768);
     // Display welcome screen
     welcomeScreen();
-    // Print available command list
-    commandList();
     // Print OS line
     uart_puts("\n");
     uart_puts(OS_NAME);
