@@ -1,8 +1,5 @@
 #include "../include/gpio.h"
 
-// Base MMIO address
-// #define MMIO_BASE 0x3F000000
-
 // Interrupt controller base address
 #define REGS_IRQ (MMIO_BASE + 0xB000)
 
@@ -29,7 +26,4 @@ void disable_interrupts(void);
 // IRQ handlers
 void enable_system_timer_irq(void);
 void disable_system_timer_irq(void);
-void enable_uart0_irq(void);
-void disable_uart0_irq(void);
 void handle_irq_elx(void);
-
