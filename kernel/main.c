@@ -32,6 +32,8 @@ int previousPosY = 0; // Previous vertical position of the image
 
 //--------------------------------------------------------- Command -----------------------------------------------------------
 // CommandList
+void task1();
+
 void commandList()
 {
     uart_puts("\n1. Show font size\n");
@@ -73,8 +75,8 @@ void welcomeScreen()
 //---------------Introduction---------------//
 void Introduction()
 {
-    drawString(200, 100, "Welcome to Group 2 OS", 0xFF00FF, 4);             // Magenta
-    drawString(200, 500, "EEET2490 - Embedded Systems:", 0xFFFF99FF, 3);     // Pink
+    drawString(200, 100, "Welcome to Group 2 OS", 0xFF00FF, 4);          // Magenta
+    drawString(200, 500, "EEET2490 - Embedded Systems:", 0xFFFF99FF, 3); // Pink
     drawString(150, 600, "Operating Systems and Interfacing", 0xFFFF99FF, 3);
 }
 //---------------font---------------//
@@ -217,7 +219,7 @@ void cli()
         {
             video();
         }
-        else if (strcmp(command , "game") == 0 )
+        else if (strcmp(command, "game") == 0)
         {
             game_play();
         }
@@ -242,7 +244,7 @@ void main()
     uart_init();
     // Initialize frame buffer with specific width and height
     fb_init(1024, 768);
-    //Display welcome screen
+    // Display welcome screen
     welcomeScreen();
     // Print available command list
     commandList();
@@ -251,6 +253,14 @@ void main()
     uart_puts(OS_NAME);
     uart_puts(":> ");
     // echo everything back
+
+    task1();
+}
+
+void task1()
+{
+    BackgroundImage();
+    Introduction();
     while (1)
     {
         cli();

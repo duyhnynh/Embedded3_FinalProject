@@ -32,6 +32,7 @@ int monster_array_value;
 unsigned int monster_position_array[12];
 int die_by_bullet;
 
+int escape_game;
 int immutal = 0;
 
 void all_clear_fn();
@@ -282,7 +283,7 @@ void game_play()
                     }
                 }
                 wait_msec_game(600);
-                show_game_over_fn();
+                escape_game = show_game_over_fn();
                 game_over_flag = 0;
                 game_start = 0;
             }
@@ -294,6 +295,11 @@ void game_play()
             game_start = 1;
             game_start_fn();
             block_array = create_block_array(first_block);
+        }
+
+        if (escape_game == 1)
+        {
+            break;
         }
     }
 }
@@ -405,7 +411,8 @@ void all_clear_fn()
             break;
         }
 
-        else if (c == 'q'){
+        else if (c == 'q')
+        {
             main();
         }
 

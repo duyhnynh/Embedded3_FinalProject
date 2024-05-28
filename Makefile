@@ -26,7 +26,10 @@ kernel8.img: $(BUILD_DIR)/boot.o $(OFILES) $(BUILD_DIR)/main.o
 
 clean:
 # For MacOS
-	rm -rf .o *.img $(BUILD_DIR)/.o $(BUILD_DIR)/*.img $(BUILD_DIR)/*.elf
+#	rm -rf .o *.img $(BUILD_DIR)/.o $(BUILD_DIR)/*.img $(BUILD_DIR)/*.elf
+# For Linux
+	rm -f .o *.img $(BUILD_DIR)/.o $(BUILD_DIR)/*.img $(BUILD_DIR)/*.elf
+
 # #For Windows
 #	del .img .\build\kernel8.elf .\build\.o
 
@@ -34,9 +37,9 @@ clean:
 # Run emulation with QEMU
 run:
 #	For MacOS
-	qemu-system-aarch64 -M raspi3b -kernel kernel8.img -serial null -serial stdio
+#	qemu-system-aarch64 -M raspi3b -kernel kernel8.img -serial null -serial stdio
 # For Windows
-#	qemu-system-aarch64 -M raspi3 -kernel kernel8.img -serial null -serial stdio
+	qemu-system-aarch64 -M raspi3 -kernel kernel8.img -serial null -serial stdio
 
 # music:
 # 	cmd /C start Mercury.mp3

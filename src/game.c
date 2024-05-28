@@ -176,7 +176,7 @@ void startGame()
     drawString(340, 400, "Press Enter to start", 0x0000BB00, 2);
 }
 
-void show_game_over_fn()
+int show_game_over_fn()
 {
     int x = 1024;
     int y = 768;
@@ -198,6 +198,12 @@ void show_game_over_fn()
         if (c == 'r')
         {
             break;
+            return 0;
+        }
+        else if (c == 'q')
+        {
+            task1();
+            return 1;
         }
     }
 }
