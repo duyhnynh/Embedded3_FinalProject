@@ -603,12 +603,11 @@ void pause_mode()
                 uart_puts("data bit  = 8 \n");
                 uart_puts("handshaking  = off \n");
             }
-            else if (my_strncmp(currentCommand, "j", 1))
+            else if (my_strncmp(currentCommand, "complete_screen", 15))
             {
-                uart_puts("\n");
-                uart_sendi(current_h_index);
-                uart_puts("\n");
+                all_clear_fn();
             }
+
             else
             {
                 uart_puts("\"");
