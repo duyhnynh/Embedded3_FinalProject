@@ -143,7 +143,6 @@ void game_play()
                     direction = 0;
                     is_jump = 1;
                     // re load at here
-                    uart_puts("character moves to \"left\" side \n");
                 }
 
                 else if (c == 'd')
@@ -155,7 +154,6 @@ void game_play()
                     direction = 1;
                     is_jump = 1;
                     // re load at here
-                    uart_puts("character moves to \"right\" side \n");
                 }
                 else if (c == ' ')
                 {
@@ -320,6 +318,7 @@ void game_play()
 
         if (escape_game == 1)
         {
+            game_init_fn();
             break;
         }
     }
@@ -427,7 +426,7 @@ void all_clear_fn()
     unsigned char c;
     load_monster_for_complete_screen(700);
     drawString(300, 400, "Press r to restart the game", 0x0000BB00, 2);
-    drawString(300, 600, "Press \"q\" to escape the game", 0x0000FF, 2);
+    drawString(300, 500, "Press \"q\" to escape the game", 0x0000FF, 2);
 
     while (1)
     {

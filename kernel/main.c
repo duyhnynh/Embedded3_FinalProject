@@ -176,6 +176,7 @@ void cli()
     static int index = 0;
     static char *command;
     char c = uart_getc();
+
     if (c != '\b')
     {
         uart_sendc(c);
@@ -225,6 +226,7 @@ void cli()
         }
         else if (strcmp(command, "game") == 0)
         {
+            index = 0;
             game_play();
         }
         else if (strcmp(command, "clear") == 0)

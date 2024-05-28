@@ -28,10 +28,10 @@ clean:
 # For MacOS
 #	rm -rf .o *.img $(BUILD_DIR)/.o $(BUILD_DIR)/*.img $(BUILD_DIR)/*.elf
 # For Linux
-#	rm -f .o *.img $(BUILD_DIR)/.o $(BUILD_DIR)/*.img $(BUILD_DIR)/*.elf
+	rm -f .o *.img $(BUILD_DIR)/.o $(BUILD_DIR)/*.img $(BUILD_DIR)/*.elf
 
 # #For Windows
-	del .img .\build\kernel8.elf .\build\.o
+#	del .img .\build\kernel8.elf .\build\.o
 
 
 # Run emulation with QEMU
