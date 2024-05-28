@@ -189,8 +189,10 @@ int show_game_over_fn()
             drawPixelARGB32(j, i, 0x000000);
         }
     }
+
     drawString(400, 200, "Game Over", 0x00AA0000, 3);
-    drawString(300, 400, "Press r to restart the game", 0x0000BB00, 2);
+    drawString(300, 400, "Press \"r\" to restart the game", 0x0000BB00, 2);
+    drawString(300, 600, "Press \"q\" to escape the game", 0x0000FF, 2);
 
     while (1)
     {
@@ -202,7 +204,6 @@ int show_game_over_fn()
         }
         else if (c == 'q')
         {
-            task1();
             return 1;
         }
     }
