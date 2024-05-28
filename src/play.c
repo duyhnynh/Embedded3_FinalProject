@@ -427,6 +427,7 @@ void all_clear_fn()
     unsigned char c;
     load_monster_for_complete_screen(700);
     drawString(300, 400, "Press r to restart the game", 0x0000BB00, 2);
+    drawString(300, 600, "Press \"q\" to escape the game", 0x0000FF, 2);
 
     while (1)
     {
@@ -443,7 +444,8 @@ void all_clear_fn()
 
         else if (c == 'q')
         {
-            main();
+            escape_game = 1;
+            break;
         }
 
         if (ms_counter == 50)
